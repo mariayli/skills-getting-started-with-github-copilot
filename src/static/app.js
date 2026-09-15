@@ -57,7 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const option = document.createElement("option");
         option.value = name;
         option.textContent = name;
-        activitySelect.appendChild(option);
+       if (![...activitySelect.options].some(existingOption => existingOption.value === name)) {
+         activitySelect.appendChild(option);
+       }
       });
 
       // Add event listeners to delete buttons
