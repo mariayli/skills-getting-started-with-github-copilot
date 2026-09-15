@@ -21,11 +21,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const spotsLeft = details.max_participants - details.participants.length;
         
         // Create participants list HTML
+        const escapeHtml = (value) =>
+          String(value).replace(/[&<>"']/g, char => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+          }[char]));
         const participantsList = details.participants.length > 0
           ? details.participants.map(email => `
               <li>
-                <span class="participant-email">${email}</span>
-                <button class="delete-participant-btn" data-activity="${name}" data-email="${email}" title="Remove participant">×</button>
+                <span class="participant-email">${escapeHtml(email)}</span>
+                <button class="delete-participant-btn" data-activity="${escapeHtml(name)}" data-email="${escapeHtml(email)}" title="Remove participant">×</button>
               </li>
             `).join('')
           : '<li><em>No participants yet</em></li>';
